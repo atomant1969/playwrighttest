@@ -1,0 +1,155 @@
+[
+    {
+        "testName": "test 1 (login)- valid input",
+        "email": "John@email.com",
+        "password": "30",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 2 (login)- invalid email format",
+        "email": "Johnemail.com",
+        "password": "30",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 3 (login)- email missing '@'",
+        "email": "Johnemail.com",
+        "password": "password123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 4 (login)- invalid password format",
+        "email": "valid@email.com",
+        "password": "pass",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 5 (login)- empty email field",
+        "email": "",
+        "password": "password123",
+        "message": "Необходимо заполнить «Электронная почта»."
+    },
+    {
+        "testName": "test 6 (login)- empty password field",
+        "email": "valid@email.com",
+        "password": "",
+        "message": "Необходимо заполнить «Пароль»."
+    },
+    {
+        "testName": "test 7 (login)- both fields empty",
+        "email": "",
+        "password": "",
+        "message": "Необходимо заполнить «Электронная почта».Необходимо заполнить «Пароль»."
+    },
+    {
+        "testName": "test 8 (login)- valid email, wrong password",
+        "email": "valid@email.com",
+        "password": "wrongpassword",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 9 (login)- SQL injection attempt",
+        "email": "valid@email.com",
+        "password": "' OR '1'='1",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 10 (login)- XSS attempt in email",
+        "email": "<script>alert('xss')</script>@mail.com",
+        "password": "password123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 12 (login)- email with special characters",
+        "email": "valid.email+alias@gmail.com",
+        "password": "password123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 13 (login)- password with special characters",
+        "email": "valid@email.com",
+        "password": "p@ssw0rd!123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 15 (login)- email with leading/trailing spaces",
+        "email": "  valid@email.com  ",
+        "password": "password123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 16 (login) - password with leading/trailing spaces",
+        "email": "valid@email.com",
+        "password": "  password123  ",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 17 (login)- numeric email and password",
+        "email": "12345@67890.com",
+        "password": "9876543210",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 14 (login)- very long password",
+        "email": "valid@email.com",
+        "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 11 (login)- email with long domain",
+        "email": "valid@aw222222222222222222222222222222222.com",
+        "password": "password123",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 1 (register)- valid input",
+        "email": "John1@email.com",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 2 (register)- invalid email format",
+        "email": "John2@emailcom",
+        "message": "Значение «Электронная почта» не является правильным email адресом."
+    },
+    {
+        "testName": "test 3 (register)- email missing '@'",
+        "email": "John3email.com",
+        "message": "Значение «Электронная почта» не является правильным email адресом."
+    },
+    {
+        "testName": "test 4 (register)- empty email field",
+        "email": "",
+        "message": "Необходимо заполнить «Электронная почта»."
+    },
+    {
+        "testName": "test 5 (register)- SQL injection attempt",
+        "email": "' OR '1'='1",
+        "message": "Значение «Электронная почта» не является правильным email адресом."
+    },
+    {
+        "testName": "test 6 (register)- XSS attempt in email",
+        "email": "<script>alert('xss')</script>@mail.com",
+        "message": "Значение «Электронная почта» не является правильным email адресом."
+    },
+    {
+        "testName": "test 7 (register)- email with special characters",
+        "email": "valid.email+alias7@gmail.com",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 8 (register)- email with leading/trailing spaces",
+        "email": "  valid15@email.com  ",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 9 (register)- numeric email and password",
+        "email": "123459@67890.com",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    },
+    {
+        "testName": "test 10 (register)- email with long domain",
+        "email": "valid10@aw222222222222222222222222222222222.com",
+        "message": "Неверно указана электронная почта, логин или пароль."
+    }
+
+]
