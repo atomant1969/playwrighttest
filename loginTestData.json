@@ -100,56 +100,5 @@
         "email": "valid@aw222222222222222222222222222222222.com",
         "password": "password123",
         "message": "Неверно указана электронная почта, логин или пароль."
-    },
-    {
-        "testName": "test 1 (register)- valid input",
-        "email": "John1@email.com",
-        "message": "Неверно указана электронная почта, логин или пароль."
-    },
-    {
-        "testName": "test 2 (register)- invalid email format",
-        "email": "John2@emailcom",
-        "message": "Значение «Электронная почта» не является правильным email адресом."
-    },
-    {
-        "testName": "test 3 (register)- email missing '@'",
-        "email": "John3email.com",
-        "message": "Значение «Электронная почта» не является правильным email адресом."
-    },
-    {
-        "testName": "test 4 (register)- empty email field",
-        "email": "",
-        "message": "Необходимо заполнить «Электронная почта»."
-    },
-    {
-        "testName": "test 5 (register)- SQL injection attempt",
-        "email": "' OR '1'='1",
-        "message": "Значение «Электронная почта» не является правильным email адресом."
-    },
-    {
-        "testName": "test 6 (register)- XSS attempt in email",
-        "email": "<script>alert('xss')</script>@mail.com",
-        "message": "Значение «Электронная почта» не является правильным email адресом."
-    },
-    {
-        "testName": "test 7 (register)- email with special characters",
-        "email": "valid.email+alias7@gmail.com",
-        "message": "Неверно указана электронная почта, логин или пароль."
-    },
-    {
-        "testName": "test 8 (register)- email with leading/trailing spaces",
-        "email": "  valid15@email.com  ",
-        "message": "Неверно указана электронная почта, логин или пароль."
-    },
-    {
-        "testName": "test 9 (register)- numeric email and password",
-        "email": "123459@67890.com",
-        "message": "Неверно указана электронная почта, логин или пароль."
-    },
-    {
-        "testName": "test 10 (register)- email with long domain",
-        "email": "valid10@aw222222222222222222222222222222222.com",
-        "message": "Неверно указана электронная почта, логин или пароль."
-    }
-
+    }  
 ]

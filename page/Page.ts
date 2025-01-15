@@ -1,96 +1,51 @@
 import { Page } from '@playwright/test';
 import { AbstractPage } from './AbstractPage';
-
+import { ENV, SELECTORS } from '../config'; // Import the selectors
 import { Input } from './Input';
 import { Button } from './Button';
+import logger from '../lib/logger';
 
 export class PageObject extends AbstractPage {
-    private button: Button;
-    private input: Input;
+    protected button: Button;
+    protected input: Input;
 
-    // Selectors as constants for better maintainability
-    private readonly emailInputSelector = '#email';
-    private readonly passwordInputSelector = '#password';
-    private readonly applyDataButtonSelector = '.btn.btn-primary.pull-right'; // Corrected the selector
-    private readonly loginButtonSelector = '.login-button'; // Selector for the login button
-    private readonly registerButtonSelector = '.registration-button.scroll'; // Selector for the login button
-    private readonly registerErrorMessage = '.description.result.error'; // Error message below the registration email field
-    private readonly displayErrorMessage = '.alert.result.alert-danger'; //error message field
-    private readonly registerEmailInputSelector = 'input[name="email"]'; // registration page email (on the homepage)
     constructor(page: Page) {
         super(page);
         this.button = new Button(page);
         this.input = new Input(page);
     }
 
-    // Open a specified URL
-    async open(url: string): Promise<void> {
-        await this.page.goto(url, { waitUntil: 'domcontentloaded' });
-    }
-
-    // Wait for the login button to appear in the DOM
-    async waitForLoginButton(): Promise<boolean> {
-        try {
-            await this.page.waitForSelector(this.loginButtonSelector, { state: 'visible', timeout: 5000 });
-            return true;
-        } catch (e: unknown) {
-            if (e instanceof Error) {
-                console.error(`Login button not found: ${e.message}`);
-            } else {
-                console.error('An unknown error occurred');
-            }
-            return false;
-        }
-    }
-    
-    // Method to click a button by text content
-    async clickButtonByText(buttonText: string): Promise<void> {
-        await this.page.click(`button:has-text("${buttonText}")`);
-    }
-
-    // Click the login button
-    async clickLoginButton(): Promise<void> {
-        await this.button.clickButton(this.loginButtonSelector);
-    }
-    // Click the register button
-    async clickRegisterButton(): Promise<void> {
-        await this.button.clickButton(this.registerButtonSelector);
-    }
-
-    // Fill in the email input
-    async fillEmail(value: string): Promise<void> {
-        await this.input.setInputValue(this.emailInputSelector, value);
-    }
-    // Fill in the email input for the registration field
-    async fillRegisterEmail(value: string): Promise<void> {
-        await this.page.fill(this.registerEmailInputSelector, value);
-    }
-
-    // Fill in the password input
-    async fillPassword(value: string): Promise<void> {
-        await this.input.setInputValue(this.passwordInputSelector, value);
-    }
-
-    // Click the "Apply Data" button
-    async applyData(): Promise<void> {
-        await this.button.clickButton(this.applyDataButtonSelector);
-    }
-
     // Get the text content of a specified selector
     async getText(selector: string): Promise<string | null> {
         return await this.page.textContent(selector);
     }
-    // Adding waitForTimeout method
-    async waitForTimeout(ms: number): Promise<void> {
-        await this.page.waitForTimeout(ms);
-    }
+
+    // Normalize text by removing extra spaces and normalizing unicode
     normalizeText(text: string): string {
-        return text.normalize('NFC').replace(/\s+/g, ' ');
+        return text.normalize('NFC').replace(/\s+/g, ' ').trim();
     }
-    
+
+    // Get the normalized text content of a specified selector
     async getTextNormalized(selector: string): Promise<string | null> {
-        const text = await this.getText(selector); // existing method to get text
-        console.log(text);
+        const text = await this.getText(selector);
         return text ? this.normalizeText(text) : null;
+    }
+
+    // Get error message (or any other message) and return normalized text
+    async getErrorMessage(selector: string): Promise<string | null> {
+        return await this.getTextNormalized(selector); // Reuse the method from PageObject
+    }
+    // Open a specified URL
+    async open(url: string = ENV.BASE_URL): Promise<void> {
+        await this.page.goto(url, { waitUntil: 'domcontentloaded' });
     }    
+    async waitForTimeout(ms: number = 1000): Promise<void> {
+        if (ENV.DEBUG) {
+            logger.info('Page Class: '+`Pausing for ${ms} milliseconds...`);
+        }
+        await this.page.waitForTimeout(ms);
+        if (ENV.DEBUG) {
+            logger.info('Page Class: '+'Pause complete');
+        }
+    }
 }

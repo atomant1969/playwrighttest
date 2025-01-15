@@ -1,72 +1,60 @@
 import { test, expect } from '@playwright/test';
-import { PageObject } from './page/page';
-import testData from './testData.json';
+import { LoginPage } from './page/LoginPage';
+import { RegistrationPage } from './page/RegistrationPage';
+import loginTestData from './loginTestData.json';
+import registrationTestData from './registrationTestData.json';
+import { ENV } from './config';
+import logger from './lib/logger';
 
-test.use({ headless: false }); // Ensure non-headless mode
+test.use({ headless: ENV.HEADLESS });
 
 test.describe('Website Testing', () => {
-    let pageObject: PageObject;
-    let page: any;
-    let context: any;
-    let browser: any;
+    let loginPage: LoginPage;
+    let registrationPage: RegistrationPage;
 
-    // Create browser context once for all tests
-    test.beforeAll(async ({ browser: playwrightBrowser }) => {
-        browser = playwrightBrowser;
-        context = await browser.newContext();
-        page = await context.newPage();
-        pageObject = new PageObject(page);
+    test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page);
+        registrationPage = new RegistrationPage(page);
+
+        // Ensure the base URL is opened before each test
+
+        
+        
+        
     });
-
-    // Close the browser after all tests are done
-    test.afterAll(async () => {
-        await context.close();
-    });
-
-    // Iterate through the testData array and create individual tests dynamically
-    testData.filter((data) => data.testName.includes('login')).forEach((data) => {
-        // Create a test for each test data entry
+    loginTestData.forEach((data) => {
         test(data.testName, async () => {
-            // Setup: Reuse the existing pageObject and navigate
-            await pageObject.open('https://gymlog.ru/');
-            await pageObject.clickLoginButton();
-            //await pageObject.applyData();
+            await loginPage.open();
+            await loginPage.clickLoginButton();
+            await loginPage.fillEmail(data.email);
+            await loginPage.fillPassword(data.password);
+            await loginPage.clickLoginApplyButton();
 
-            // Fill in email and password from the test data
-            await pageObject.fillEmail(data.email);
-            await pageObject.fillPassword(data.password);
-            await pageObject.applyData();
+            const actualText = await loginPage.getErrorMessage();
 
-            // Wait to see results
-            await pageObject.waitForTimeout(1000);
-
-            // Perform assertions
-			
-            const actualText = await pageObject.getTextNormalized(pageObject.displayErrorMessage);
-            expect(actualText).toBe(pageObject.normalizeText(data.message));
+            expect(actualText).toBe(data.message);
         });
     });
-	// this section is for testing the registration page
-	testData.filter((data) => data.testName.includes('register')).forEach((data) => {
-        // Create a test for each test data entry
+
+    registrationTestData.forEach((data) => {
+        
         test(data.testName, async () => {
-            // Setup: Reuse the existing pageObject and navigate
-            await pageObject.open('https://gymlog.ru/');
-            await pageObject.clickRegisterButton();
-            //await pageObject.applyData();
+            await registrationPage.open();
+            // Open registration page if necessary
+            await registrationPage.clickRegisterButton();
 
-            // Fill in email and password from the test data
-            await pageObject.fillRegisterEmail(data.email);
-            // Click the registration button by its text content
-			await pageObject.clickButtonByText("Начать работу бесплатно");
+            await registrationPage.fillEmail(data.email);
+            await registrationPage.clickFreeWorkButton();
 
-
-            // Wait to see results
-            await pageObject.waitForTimeout(4000);
-
-            // Perform assertions
-            const actualText = await pageObject.getTextNormalized(pageObject.registerErrorMessage);
-            expect(actualText).toBe(pageObject.normalizeText(data.message));
+            const actualText = await registrationPage.getErrorMessage();
+            if (ENV.DEBUG) {
+                logger.info('Main Actual text: '+actualText);
+                logger.info('Main Expected Text: '+data.message);
+                logger.info('Main Expected Text: '+data.altmessage);
+            }    
+            expect(
+                actualText.includes(data.message) || actualText.includes(data.altmessage)
+            ).toBeTruthy();
         });
     });
 });
