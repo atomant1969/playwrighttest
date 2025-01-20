@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\tau-introduction-to-playwright\\demo\\tests\\hhru-test\\playwrighttest\\logs\\info\\.3bac35863f780420cb05dc2d9f60e6dd1e9b5f51-audit.json",
+    "files": [
+        {
+            "date": 1737349522729,
+            "name": "C:\\tau-introduction-to-playwright\\demo\\tests\\hhru-test\\playwrighttest\\logs\\info\\info-2025-01-20.log",
+            "hash": "e23b8cc9737d54a0484f7180df1082094fc6391bf0a698304c146fee9c1b0efc"
+        }
+    ],
+    "hashType": "sha256"
+}
