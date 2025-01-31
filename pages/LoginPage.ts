@@ -9,7 +9,7 @@
  * - 2025-01-20: Refactored code to improve reusability and maintainability.
  */
 
-import { PageObject } from './Page'; // Import the base PageObject class
+import { PageObject } from '../lib/Page'; // Import the base PageObject class
 import { ENV, SELECTORS } from '../config'; // Import environment and selector configurations
 import logger from '../lib/logger'; // Import logger utility for logging messages
 

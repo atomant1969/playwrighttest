@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Work\\playwrighttest\\logs\\info\\.7d794f8761f9fa449c74927975a6145511cea062-audit.json",
+    "files": [
+        {
+            "date": 1737973030115,
+            "name": "D:\\Work\\playwrighttest\\logs\\info\\info-2025-01-27.log",
+            "hash": "98d98605dd3930d2264d490fb7702057197b1d2ada088e2f322a623a8e4ea9ba"
+        },
+        {
+            "date": 1738122082617,
+            "name": "D:\\Work\\playwrighttest\\logs\\info\\info-2025-01-29.log",
+            "hash": "9c55e018e5290cfff31b32347cc6ea701a0b5d2d0156de0d8a1d35f727f7a976"
+        }
+    ],
+    "hashType": "sha256"
+}

@@ -14,7 +14,7 @@ import { AbstractPage } from './AbstractPage'; // Import the base AbstractPage c
 import { ENV, SELECTORS } from '../config'; // Import environment and selector configurations
 import { Input } from './Input'; // Import the Input helper class for handling input fields
 import { Button } from './Button'; // Import the Button helper class for handling button clicks
-import logger from '../lib/logger'; // Import logger utility for logging messages
+import logger from './logger'; // Import logger utility for logging messages
 
 /**
  * PageObject class that provides common page actions, such as interacting with inputs, buttons, and retrieving text.
